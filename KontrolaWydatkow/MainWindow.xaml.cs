@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,13 +18,13 @@ namespace ExpenseManager
 {
     /// <summary>
     /// Do zrobienia:
-    /// -rzutowanie ceny itemów na double
+    /// -rzutowanie ceny itemów na double ----------OK
     /// -Wprowadzanie stanu mojego konta
     /// -edycja stanu konta, odejmowanie i dodawanie po wrzuceniu itemków
     /// -gdzieś trzymać ten stan konta (chyba w Settings czy coś można)
     /// -polimorfizmy, dziedziczenia? Czy warto?
     /// -zmiana źródłowego xmla
-    /// -github
+    /// -github ---------OK
     /// </summary>
     public partial class MainWindow : Window
     {
@@ -47,10 +48,25 @@ namespace ExpenseManager
 
         private void button_Click(object sender, RoutedEventArgs e)
         {
-            main.addItems(name.Text, cost.Text, (Item.Category)category.SelectedItem);
+            try
+            {
+                cost.Text = String.Format("{0:F2}", double.Parse(cost.Text));
+                main.addItems(name.Text, cost.Text, (Item.Category)category.SelectedItem);
+                listView.ItemsSource = null;
+                listView.ItemsSource = main.Items;
 
-            listView.ItemsSource = null;
-            listView.ItemsSource = main.Items;
+                // double value = double.Parse(cost.Text, NumberStyles.Currency);
+                //decimal value = Decimal.Parse(cost.Text);
+                //textBlock.Text = value.ToString();
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show("Zły format ceny! Spróbuj jeszcze raz!\nPamiętaj, że grosze wydzielamy kropką np. 8.99 a nie 8,99!");
+            }
+            
+
+            
         }
 
         private void listView_Loaded(object sender, RoutedEventArgs e)
