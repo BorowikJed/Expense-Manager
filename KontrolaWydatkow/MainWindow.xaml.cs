@@ -19,12 +19,13 @@ namespace ExpenseManager
     /// <summary>
     /// Do zrobienia:
     /// -rzutowanie ceny itemów na double ----------OK
-    /// -Wprowadzanie stanu mojego konta
+    /// -Wprowadzanie stanu mojego konta -----------OK...
     /// -edycja stanu konta, odejmowanie i dodawanie po wrzuceniu itemków
     /// -gdzieś trzymać ten stan konta (chyba w Settings czy coś można)
     /// -polimorfizmy, dziedziczenia? Czy warto?
     /// -zmiana źródłowego xmla
     /// -github ---------OK
+    /// -JAK KTOŚ USUNIE POWINNA WRÓCIĆ KASA!
     /// </summary>
     public partial class MainWindow : Window
     {
@@ -70,16 +71,16 @@ namespace ExpenseManager
         private void listView_Loaded(object sender, RoutedEventArgs e)
         {
             listView.ItemsSource = null;
-            listView.ItemsSource = main.Items;
-            
+            listView.ItemsSource = main.Items; 
             saldoTextBox.Text = String.Format("{0:F2}", double.Parse(Account.getSaldo().ToString()));
         }
+
         //Export to XML
         private void button1_Click(object sender, RoutedEventArgs e)
         {
-            //save.ToXML<Item>(main.Items);
             Save.MakingXML(main.Items);
         }
+
         //Populating list from XML
         private void button2_Click(object sender, RoutedEventArgs e)
         {
@@ -93,7 +94,10 @@ namespace ExpenseManager
         private void button3_Click(object sender, RoutedEventArgs e)
         {
             foreach (Item item in listView.SelectedItems)
+            { //JAK KTOŚ USUNIE, TO POWINNA WRÓCIĆ KASA!!!!!!!!!
                 main.Items.Remove(item);
+            }
+                
 
             listView.ItemsSource = null;
             listView.ItemsSource = main.Items;

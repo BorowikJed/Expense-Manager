@@ -19,7 +19,7 @@ namespace ExpenseManager
         public static void setSaldo(double s)
         {
             if (Saldo < 0)
-                MessageBox.Show("Uważaj, jesteś na debecie!!!\nCzas coś zarobić ;)");
+                MessageBox.Show("Uważaj, jesteś na debecie!!!\nCzas coś zarobić ;)", "Heheszki, uwaga!");
             Saldo = s;
 
             MainWindow mw = new MainWindow();

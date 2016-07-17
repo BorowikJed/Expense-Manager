@@ -59,10 +59,14 @@ namespace ExpenseManager
                 ).ToList();
 
                 //Account.setSaldo(double.Parse(doc.Attribute("Saldo").Value));
-                doc.Elements("Item").Select(x =>
+                // doc.Elements("Item").Select(x =>saldoValue = double.Parse(x.Attribute("Saldo").Value));
+                //saldoValue = double.Parse(doc.Attribute("Saldo").Value);
+                XDocument doc2 = XDocument.Load(xml);
+                XElement root = doc2.Root;
+                XElement lastPost = (XElement)root.LastNode;
 
-                    saldoValue = double.Parse(x.Attribute("Saldo").Value)
-                    );
+                saldoValue = double.Parse( lastPost.Attribute("Saldo").Value);
+
                 Account.setSaldo(saldoValue);    
                 
             }
