@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 
 namespace ExpenseManager
 {
+    [XmlRoot(ElementName = "RootXML")]
     public class Item
     {
         public String Name { get; set; } 
@@ -29,12 +31,22 @@ namespace ExpenseManager
 
         public  enum Category
         {
-            Food = -1,
-            Household = -2,
-            Salary = 1
+            Jedzenie = -1,
+            Domowe = -2,
+            Przychód = 1
         }
-     
-        
+
+        //Adding attribute with Saldo to XML
+        private string _Saldo = String.Format("{0:F2}", Account.getSaldo());
+        [XmlAttribute]
+        public String Saldo
+        {
+            get { return _Saldo; }
+
+            set { _Saldo = value; }
+        }
+
+
 
     }
 }

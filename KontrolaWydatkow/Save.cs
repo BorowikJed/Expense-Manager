@@ -31,17 +31,20 @@ namespace ExpenseManager
         //    }
         //}
 
-        public void MakingXML(List<Item> items)
+        public static void MakingXML(List<Item> items)
         {
             
                 TextWriter Filestream = new StreamWriter("output.xml");
                 new XmlSerializer(typeof(List<Item>)).Serialize(Filestream, items);
                 Filestream.Close();   
         }
+        
+       
 
         public static List<Item> FromXML(string xml)
         {
             List<Item> lstItem = null;
+            double saldoValue = 0.00;
             try
             {
                 XElement doc = XElement.Load(xml);
@@ -54,6 +57,14 @@ namespace ExpenseManager
                     Time = x.Element("Time").Value
                 }
                 ).ToList();
+
+                //Account.setSaldo(double.Parse(doc.Attribute("Saldo").Value));
+                doc.Elements("Item").Select(x =>
+
+                    saldoValue = double.Parse(x.Attribute("Saldo").Value)
+                    );
+                Account.setSaldo(saldoValue);    
+                
             }
             catch (IOException e)
             {

@@ -31,6 +31,7 @@
         <Button x:Name="button1" Content="Zapisz" HorizontalAlignment="Left" Margin="530,339,0,0" VerticalAlignment="Top" Width="90" Click="button1_Click" Height="30"/>
         <Button x:Name="button2" Content="Wczytaj" HorizontalAlignment="Left" Margin="467,339,0,0" VerticalAlignment="Top" Width="58" Height="30" Click="button2_Click"/>
         <Button x:Name="button3" Content="Usuń zaznaczone" HorizontalAlignment="Left" Margin="241,339,0,0" VerticalAlignment="Top" Width="105" Height="30" Click="button3_Click"/>
-        <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="53,282,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Height="70" Width="148"/>
+        <TextBlock x:Name="saldoTextBox"  HorizontalAlignment="Left" Margin="53,311,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Height="41" Width="147" FontSize="26.667"/>
+        <Label x:Name="label3" Content="Moje saldo" HorizontalAlignment="Left" Margin="53,280,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
     </Grid>
 </Window>
