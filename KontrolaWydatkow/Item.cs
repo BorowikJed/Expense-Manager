@@ -10,6 +10,8 @@ namespace ExpenseManager
     //[XmlRoot(ElementName = "RootXML")]
     public class Item
     {
+        //they are public because of problems
+        //with access working with XML
         public String Name { get; set; } 
         public String Cost { get; set; }
         public Category Cat { get; set; }
@@ -24,15 +26,7 @@ namespace ExpenseManager
             dt = DateTime.Now;
             this.Time = String.Format("{0:u}", dt);
         }
-        public Item(String n, String c, Category cat, String t)
-        {
-            this.Name = n;
-            this.Cost = c;
-            this.Cat = cat;
-            //DateTime dt = new DateTime();
-            //dt = DateTime.Now;
-            this.Time = t;
-        }
+
         public Item()
         {
 
@@ -47,18 +41,6 @@ namespace ExpenseManager
             Rozrywka = -5,
             Przychód = 1
         }
-
-        //Adding attribute with Saldo to XML
-        //private string _Saldo = String.Format("{0:F2}", ArrayOfItems.getSaldo());
-        //[XmlAttribute]
-        //public String Saldo
-        //{
-        //    get { return _Saldo; }
-
-        //    set { _Saldo = value; }
-        //}
-
-
 
     }
 }

@@ -14,33 +14,6 @@ namespace ExpenseManager
 {
     class Save
     {
-        //public static List<Item> FromXML(string xml)
-        //{
-        //    using (StringReader stringReader = new StringReader(xml))
-        //    {
-        //        XmlSerializer serializer = new XmlSerializer(typeof(Item));
-        //        return (List<Item>)serializer.Deserialize(stringReader);
-        //    }
-        //}
-
-        //public string ToXML<Item>(Item obj)
-        //{
-        //    using (StringWriter stringWriter = new StringWriter(new StringBuilder()))
-        //    {
-        //        XmlSerializer xmlSerializer = new XmlSerializer(typeof(Item));
-        //        xmlSerializer.Serialize(stringWriter, obj);
-        //        return stringWriter.ToString();
-        //    }
-        //}
-
-        //DZIAŁAŁO
-        //public static void MakingXML(List<Item> items)
-        //{
-
-        //        TextWriter Filestream = new StreamWriter("output.xml");
-        //        new XmlSerializer(typeof(List<Item>)).Serialize(Filestream, items);
-        //        Filestream.Close();   
-        //}
 
         public static void MakingXML(ArrayOfItems items)
         {
@@ -54,8 +27,9 @@ namespace ExpenseManager
                 writer.Close();
             }
 
-            
-
+            //I tried to fight with XML Serialization to delete not needed 
+            //elements, but I gave up and implemented this dumb way
+            //of dealing with XML formatting :P
             StreamReader reader = new StreamReader("output.xml");
             String input = reader.ReadToEnd();
             reader.Close();
@@ -65,18 +39,7 @@ namespace ExpenseManager
             Regex rgx = new Regex(pattern);
             string output = rgx.Replace(input, replacement);
 
-
-          //  String output = input.Replace("<[/]*Items>", "");
-         //   output = input.Replace("</Items>", "");
-              
-
-
-            
             System.IO.File.WriteAllText("output.xml", output);
-
-            //TextWriter Filestream = new StreamWriter("output.xml");
-            //new XmlSerializer(typeof(List<Item>)).Serialize(Filestream, items);
-            //Filestream.Close();
         }
 
 
@@ -88,17 +51,6 @@ namespace ExpenseManager
             try
             {
                 XElement doc = XElement.Load(xml);
-
-                // lstItem = doc.Elements("Item").Select(x =>
-                //new Item
-                //     (
-                //         x.Element("Name").Value,
-                //         x.Element("Cost").Value,
-                //         (Item.Category)Enum.Parse(typeof(Item.Category), x.Element("Cat").Value),
-                //         x.Element("Time").Value
-                //     )
-                //).ToList();
-
                 lstItem = doc.Elements("Item").Select(x =>
             new Item
             {
@@ -109,28 +61,8 @@ namespace ExpenseManager
             }
             ).ToList();
 
-                //XElement doc = XElement.Load(xml);
-                //IEnumerable<XElement> Items = doc.Descendants("Items");
-                //foreach (var order in Items)
-                //    lstItem.Add(new Item
-                //    (
-                //        order.Element("Name").Value,
-                //        order.Element("Cost").Value,
-                //        (Item.Category)Enum.Parse(typeof(Item.Category), order.Element("Cat").Value),
-                //        order.Element("Time").Value
-                //    )
-                // );
-
-
-                //Account.setSaldo(double.Parse(doc.Attribute("Saldo").Value));
-                // doc.Elements("Item").Select(x =>saldoValue = double.Parse(x.Attribute("Saldo").Value));
-                //saldoValue = double.Parse(doc.Attribute("Saldo").Value);
-
-                //Zczytywanie saldo
-
                 XDocument doc2 = XDocument.Load(xml);
-                XElement root = doc2.Root;
-               
+                XElement root = doc2.Root;    
 
                 saldoValue = double.Parse(root.Attribute("mySaldo").Value);
 

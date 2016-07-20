@@ -30,12 +30,12 @@ namespace ExpenseManager
     public partial class MainWindow : Window
     {
         ArrayOfItems mainArray = new ArrayOfItems();
-        //Save save = new Save();
+
         public MainWindow()
         {
             InitializeComponent();
             listView.ItemsSource = mainArray.Items;
-            
+   
         }
 
         private void comboBox_Loaded(object sender, RoutedEventArgs e)
@@ -44,8 +44,9 @@ namespace ExpenseManager
             {
                 category.Items.Add(item);
             }
-            category.SelectedIndex = -1;
+            category.SelectedIndex = 1;
         }
+
         //Adding item to list
         private void button_Click(object sender, RoutedEventArgs e)
         {
@@ -68,6 +69,7 @@ namespace ExpenseManager
             saldoTextBox.Text = String.Format("{0:F2}", double.Parse(mainArray.getSaldo().ToString()));
         }
 
+        //Init of main list
         private void listView_Loaded(object sender, RoutedEventArgs e)
         {
             listView.ItemsSource = null;
@@ -88,13 +90,14 @@ namespace ExpenseManager
             listView.ItemsSource = null;
             listView.ItemsSource = mainArray.Items;
             saldoTextBox.Text = String.Format("{0:F2}", double.Parse(mainArray.getSaldo().ToString()));
-
         }
+
         //Deleting selected items
         private void button3_Click(object sender, RoutedEventArgs e)
         {
             foreach (Item item in listView.SelectedItems)
-            { //JAK KTOŚ USUNIE, TO POWINNA WRÓCIĆ KASA!!!!!!!!! ---ok już wraca
+            { 
+                //Money refund when deleted
                 if (item.Cat.ToString() == "Przychód")
                     mainArray.setSaldo(mainArray.getSaldo() - double.Parse(item.Cost));
                 else
@@ -103,8 +106,6 @@ namespace ExpenseManager
 
                 saldoTextBox.Text = String.Format("{0:F2}", double.Parse(mainArray.getSaldo().ToString()));
             }
-                
-
             listView.ItemsSource = null;
             listView.ItemsSource = mainArray.Items;
         }
