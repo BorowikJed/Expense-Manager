@@ -29,12 +29,12 @@ namespace ExpenseManager
     /// </summary>
     public partial class MainWindow : Window
     {
-        Main main = new Main();
+        ArrayOfItems mainArray = new ArrayOfItems();
         //Save save = new Save();
         public MainWindow()
         {
             InitializeComponent();
-            listView.ItemsSource = main.Items;
+            listView.ItemsSource = mainArray.Items;
             
         }
 
@@ -52,55 +52,61 @@ namespace ExpenseManager
             try
             {
                 cost.Text = String.Format("{0:F2}", double.Parse(cost.Text));
-                main.addItems(name.Text, cost.Text, (Item.Category)category.SelectedItem);
+                mainArray.addItems(name.Text, cost.Text, (Item.Category)category.SelectedItem);
                 listView.ItemsSource = null;
-                listView.ItemsSource = main.Items;
+                listView.ItemsSource = mainArray.Items;
                 if (category.SelectedItem.ToString() == "Przychód")
-                    Account.setSaldo(Account.getSaldo() + double.Parse(cost.Text));
+                    mainArray.setSaldo(mainArray.getSaldo() + double.Parse(cost.Text));
                 else
-                    Account.setSaldo(Account.getSaldo() - double.Parse(cost.Text));
+                    mainArray.setSaldo(mainArray.getSaldo() - double.Parse(cost.Text));
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Zły format ceny! Spróbuj jeszcze raz!\nPamiętaj, że grosze wydzielamy kropką np. 8.99 a nie 8,99!\n" + ex.Message);
 
             }
-            saldoTextBox.Text = String.Format("{0:F2}", double.Parse(Account.getSaldo().ToString()));
+            saldoTextBox.Text = String.Format("{0:F2}", double.Parse(mainArray.getSaldo().ToString()));
         }
 
         private void listView_Loaded(object sender, RoutedEventArgs e)
         {
             listView.ItemsSource = null;
-            listView.ItemsSource = main.Items; 
-            saldoTextBox.Text = String.Format("{0:F2}", double.Parse(Account.getSaldo().ToString()));
+            listView.ItemsSource = mainArray.Items; 
+            saldoTextBox.Text = String.Format("{0:F2}", double.Parse(mainArray.getSaldo().ToString()));
         }
 
         //Export to XML
         private void button1_Click(object sender, RoutedEventArgs e)
         {
-            Save.MakingXML(main.Items);
+            Save.MakingXML(mainArray);
         }
 
         //Populating list from XML
         private void button2_Click(object sender, RoutedEventArgs e)
         {
-            main.Items = Save.FromXML("output.xml");
+            mainArray.Items = Save.FromXML("output.xml", mainArray);
             listView.ItemsSource = null;
-            listView.ItemsSource = main.Items;
-            saldoTextBox.Text = String.Format("{0:F2}", double.Parse(Account.getSaldo().ToString()));
+            listView.ItemsSource = mainArray.Items;
+            saldoTextBox.Text = String.Format("{0:F2}", double.Parse(mainArray.getSaldo().ToString()));
 
         }
         //Deleting selected items
         private void button3_Click(object sender, RoutedEventArgs e)
         {
             foreach (Item item in listView.SelectedItems)
-            { //JAK KTOŚ USUNIE, TO POWINNA WRÓCIĆ KASA!!!!!!!!!
-                main.Items.Remove(item);
+            { //JAK KTOŚ USUNIE, TO POWINNA WRÓCIĆ KASA!!!!!!!!! ---ok już wraca
+                if (item.Cat.ToString() == "Przychód")
+                    mainArray.setSaldo(mainArray.getSaldo() - double.Parse(item.Cost));
+                else
+                    mainArray.setSaldo(mainArray.getSaldo() + double.Parse(item.Cost));
+                mainArray.Items.Remove(item);
+
+                saldoTextBox.Text = String.Format("{0:F2}", double.Parse(mainArray.getSaldo().ToString()));
             }
                 
 
             listView.ItemsSource = null;
-            listView.ItemsSource = main.Items;
+            listView.ItemsSource = mainArray.Items;
         }
 
         public string setSaldoText
