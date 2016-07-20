@@ -34,11 +34,12 @@ namespace ExpenseManager
 
         public  enum Category
         {
-            Jedzenie = -1,
+            Inne = -1,
             Domowe = -2,
             Samochód = -3,
             Opłaty = -4,
             Rozrywka = -5,
+            Jedzenie = -6,
             Przychód = 1
         }
 

@@ -12,7 +12,7 @@ namespace ExpenseManager
     {
         public List<Item> Items = new List<Item>();
         [XmlAttribute(AttributeName = "mySaldo")]
-        public double Saldo = 500.00;
+        public double Saldo = 0.00;
 
         public double getSaldo()
         {

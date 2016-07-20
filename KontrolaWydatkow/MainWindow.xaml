@@ -5,11 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ExpenseManager"
         mc:Ignorable="d"
-        Title="Zarządzanie wydatkami v1.0 Jędrzej Kijora" Height="375" Width="654">
+        Title="Zarządzanie wydatkami v1.0 Jędrzej Kijora" Height="382" Width="680" Closing="Window_Closing">
     <Grid Margin="0,0,-18,-11">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="413*"/>
+            <ColumnDefinition Width="251*"/>
+        </Grid.ColumnDefinitions>
         <WrapPanel HorizontalAlignment="Left" Height="188" Margin="34,49,0,0" VerticalAlignment="Top" Width="190">
             <Label x:Name="label" Content="Nazwa zakupu" Height="25" Width="193" FontWeight="Bold"/>
-            <TextBox x:Name="name" Height="24" TextWrapping="Wrap" Text="Wpisz nazwę..." Width="168"/>
+            <TextBox x:Name="name" Height="24" TextWrapping="Wrap" Width="168"/>
             <Label x:Name="label1" Content="Kwota (np 3.50)" FontWeight="Bold" Width="120"/>
             <TextBox x:Name="cost" Height="24" TextWrapping="Wrap" Text="4.50" Width="168
                      " />
@@ -17,20 +21,20 @@
             <ComboBox x:Name="category" Width="166" Loaded="comboBox_Loaded">
             </ComboBox>
         </WrapPanel>
-        <Button x:Name="button" Content="Dodaj wydatek" HorizontalAlignment="Left" Margin="34,211,0,0" VerticalAlignment="Top" Width="190" Height="26" Click="button_Click"/>
-        <ListView x:Name="listView" HorizontalAlignment="Left" Height="285" Margin="253,10,0,0" VerticalAlignment="Top" Width="379" Loaded="listView_Loaded" >
+        <Button x:Name="button" Content="Dodaj operację" HorizontalAlignment="Left" Margin="34,211,0,0" VerticalAlignment="Top" Width="190" Height="26" Click="button_Click"/>
+        <ListView x:Name="listView" HorizontalAlignment="Left" Height="295" Margin="253,10,0,0" VerticalAlignment="Top" Width="395" Loaded="listView_Loaded" Grid.ColumnSpan="2" >
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="Nazwa" Width="110" DisplayMemberBinding="{Binding Name}" />
-                    <GridViewColumn Header="Koszt" Width="50" DisplayMemberBinding="{Binding Cost}" />
+                    <GridViewColumn Header="Nazwa" Width="125" DisplayMemberBinding="{Binding Name}" />
+                    <GridViewColumn Header="Kwota" Width="56" DisplayMemberBinding="{Binding Cost}" />
                     <GridViewColumn Header="Kategoria" Width="75" DisplayMemberBinding="{Binding Cat}" />
                     <GridViewColumn Header="Czas" Width="135" DisplayMemberBinding="{Binding Time}" />
                 </GridView>
             </ListView.View>
         </ListView>
-        <Button x:Name="button1" Content="Zapisz" HorizontalAlignment="Left" Margin="542,300,0,0" VerticalAlignment="Top" Width="90" Click="button1_Click" Height="30"/>
-        <Button x:Name="button2" Content="Wczytaj" HorizontalAlignment="Left" Margin="479,300,0,0" VerticalAlignment="Top" Width="58" Height="30" Click="button2_Click"/>
-        <Button x:Name="button3" Content="Usuń zaznaczone" HorizontalAlignment="Left" Margin="253,300,0,0" VerticalAlignment="Top" Width="105" Height="30" Click="button3_Click"/>
+        <Button x:Name="button1" Content="Zapisz" HorizontalAlignment="Left" Margin="129,310,0,0" VerticalAlignment="Top" Width="90" Click="button1_Click" Height="30" Grid.Column="1"/>
+        <Button x:Name="button2" Content="Wczytaj" HorizontalAlignment="Left" Margin="66,310,0,0" VerticalAlignment="Top" Width="58" Height="30" Click="button2_Click" Grid.Column="1"/>
+        <Button x:Name="button3" Content="Usuń zaznaczone" HorizontalAlignment="Left" Margin="253,310,0,0" VerticalAlignment="Top" Width="105" Height="30" Click="button3_Click"/>
         <TextBlock x:Name="saldoTextBox"  HorizontalAlignment="Left" Margin="77,289,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Height="41" Width="147" FontSize="26.667"/>
         <Label x:Name="label3" Content="Moje saldo" HorizontalAlignment="Left" Margin="77,258,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
     </Grid>

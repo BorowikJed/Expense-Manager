@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,17 +17,7 @@ using System.Windows.Shapes;
 
 namespace ExpenseManager
 {
-    /// <summary>
-    /// Do zrobienia:
-    /// -rzutowanie ceny itemów na double ----------OK
-    /// -Wprowadzanie stanu mojego konta -----------OK...
-    /// -edycja stanu konta, odejmowanie i dodawanie po wrzuceniu itemków
-    /// -gdzieś trzymać ten stan konta (chyba w Settings czy coś można)
-    /// -polimorfizmy, dziedziczenia? Czy warto?
-    /// -zmiana źródłowego xmla
-    /// -github ---------OK
-    /// -JAK KTOŚ USUNIE POWINNA WRÓCIĆ KASA!
-    /// </summary>
+
     public partial class MainWindow : Window
     {
         ArrayOfItems mainArray = new ArrayOfItems();
@@ -72,6 +63,12 @@ namespace ExpenseManager
         //Init of main list
         private void listView_Loaded(object sender, RoutedEventArgs e)
         {
+            //if there is no save.xml file, create blank
+            if(!File.Exists("save.xml"))
+                Save.MakingXML(mainArray);
+            //import save file at the begining
+            mainArray.Items = Save.FromXML("save.xml", mainArray);
+           
             listView.ItemsSource = null;
             listView.ItemsSource = mainArray.Items; 
             saldoTextBox.Text = String.Format("{0:F2}", double.Parse(mainArray.getSaldo().ToString()));
@@ -86,7 +83,7 @@ namespace ExpenseManager
         //Populating list from XML
         private void button2_Click(object sender, RoutedEventArgs e)
         {
-            mainArray.Items = Save.FromXML("output.xml", mainArray);
+            mainArray.Items = Save.FromXML("save.xml", mainArray);
             listView.ItemsSource = null;
             listView.ItemsSource = mainArray.Items;
             saldoTextBox.Text = String.Format("{0:F2}", double.Parse(mainArray.getSaldo().ToString()));
@@ -115,5 +112,11 @@ namespace ExpenseManager
             get { return saldoTextBox.Text; }
             set { saldoTextBox.Text = value; }
         }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            Save.MakingXML(mainArray);   
+        }
+
     }
 }

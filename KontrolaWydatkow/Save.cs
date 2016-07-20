@@ -20,7 +20,7 @@ namespace ExpenseManager
             XmlWriterSettings settings = new XmlWriterSettings();
             settings.Indent = true;
 
-            using (var writer = XmlWriter.Create("output.xml", settings))
+            using (var writer = XmlWriter.Create("save.xml", settings))
             {
                 var serializer = new XmlSerializer(typeof(ArrayOfItems));
                 serializer.Serialize(writer, items);
@@ -30,7 +30,7 @@ namespace ExpenseManager
             //I tried to fight with XML Serialization to delete not needed 
             //elements, but I gave up and implemented this dumb way
             //of dealing with XML formatting :P
-            StreamReader reader = new StreamReader("output.xml");
+            StreamReader reader = new StreamReader("save.xml");
             String input = reader.ReadToEnd();
             reader.Close();
 
@@ -39,7 +39,7 @@ namespace ExpenseManager
             Regex rgx = new Regex(pattern);
             string output = rgx.Replace(input, replacement);
 
-            System.IO.File.WriteAllText("output.xml", output);
+            System.IO.File.WriteAllText("save.xml", output);
         }
 
 
